@@ -1,0 +1,22 @@
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css', integrity='sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M', crossorigin='anonymous')
+
+  body
+    mixin image-link(name, img)
+      - var str = [];
+      -   for(var p in img){
+      -     if (img.hasOwnProperty(p) && p!='id' && p!='url' && p!='name' ) {
+      -         str.push(encodeURIComponent(p) + "=" + encodeURIComponent(img[p]));
+      -     }
+      - }
+      - str = str.join("&");
+
+      a(href='?' + str + "&username="+username + "&password="+password )
+        | #{name}
+
+    block content
+

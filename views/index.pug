@@ -1,0 +1,84 @@
+extends layout
+
+block content
+  h1= title
+  .container
+    .row
+      .col-4
+        form(action="/api/image/generate" method="get")
+          .form-group
+            label(for='orient') Orientation
+            input#orient.form-control(type='number' name="orient" value=current.orient || 45)
+            small.form-text.text-muted In degrees.
+          .form-group
+            label(for='size') Size
+            input#size.form-control(type='number' name="size" value=current.size || 100)
+            small.form-text.text-muted In pixels.
+          .form-group
+            label(for='env') Envelope
+            select#env.form-control(name="env")
+              each val, key in {'gaussian':'Gaussian', 'linear':'Linear', 'cos':'Cosine', 'hann':'Hann', 'hamming':'Hamming','circle':'Circular' ,'none':'Rectangular'}
+                option(value=key selected= current.env == key) #{val}
+            small.form-text.text-muted Determines the shape of the patch.
+          .form-group
+            label(for='std') Standard Deviation
+            input#std.form-control(type='number' name="std" value=current.std || 12)
+            small.form-text.text-muted in pixels (only applies to the Gaussian envelope).
+          .form-group
+            label(for='freq') Frequency
+            input#freq.form-control(type='number' name="freq" value=current.freq || 0.1)
+            small.form-text.text-muted in cycles/ pixel.
+          .form-group
+            label(for='phase') Phase
+            input#phase.form-control(type='number' name="phase" value=current.phase || 0)
+            small.form-text.text-muted in cycles (0-1)
+          .form-group
+            label(for='color0') Background Color
+            input#color0.form-control(type='text' name="color0" value=current.color0 || '128,128,128')
+            small.form-text.text-muted RGB current should be in the 0-255 range or negative (-1).
+                                       Negative current create a transparent background.
+          .form-group
+            label(for='color1') Color 1
+            input#color1.form-control(type='text' name="color1" value=current.color1 || '255,255,255')
+            small.form-text.text-muted RGB current should be in the 0-255 range
+          .form-group
+            label(for='color2') Color 2
+            input#color2.form-control(type='text' name="color2" value=current.color2 || '0,0,0')
+            small.form-text.text-muted RGB current should be in the 0-255 range
+
+          .row
+            .col
+              .form-group
+                label(for='username') User Name
+                input#username.form-control(type='text' name="username" value=username )
+            .col
+              .form-group
+                label(for='password') Password
+                input#password.form-control(type='password' name="password" value=password )
+          button.btn.btn-primary(type='submit') Submit
+      .col-4
+        .card(style='width: 20rem;')
+          img.card-img-top(src=current.url)
+          ul
+            each val, key in current
+              li= key + ": " + val
+
+      .col-4
+          ul.list-group
+            each img in images
+              li.list-group-item(class=img.name == currentName? 'active' : '')
+                +image-link(img.name, img)
+
+
+
+
+
+
+
+
+
+
+
+
+
+

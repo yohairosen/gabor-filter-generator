@@ -1,0 +1,16 @@
+extends layout
+
+block content
+  .container
+    .row.justify-content-center
+      .col-6
+        .card
+          .card-header
+            | Quote
+          .card-body
+            form.form-inline(action="/api/user/login" method="get")
+                  .form-group
+                    input#username.form-control(type='text' name="username" value='test@gmail.com' placeholder="Username" )
+                  .form-group.mx-sm-3
+                    input#password.form-control(type='password' name="password" value="12345678" placeholder="Password"  )
+                  button.btn.btn-primary(type='submit') Submit
